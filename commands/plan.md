@@ -4,9 +4,9 @@ description: "Phase 1 — plan the site: information architecture, content, and 
 
 # /site-builder:plan — IA, content & acceptance criteria
 
-Read `.site/brief.md`. Produce the plan by engaging the relevant skills (they auto-activate; invoke
-explicitly if needed): `information-architecture`, `content-design`, `ux-writing`,
-`acceptance-criteria`.
+Read `.site/brief.md`. If **superpowers** is installed, use its `/write-plan` for the plan's
+structure and rigor. Engage the website skills (they auto-activate; invoke explicitly if needed):
+`information-architecture`, `content-design`, `ux-writing`, `acceptance-criteria`.
 
 Produce three artifacts:
 

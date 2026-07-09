@@ -1,5 +1,6 @@
 ---
 description: "Evidence-first website craft: shows gate results, never claims done without proof."
+force-for-plugin: true
 ---
 
 # Site Craft output style

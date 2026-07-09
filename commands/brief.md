@@ -10,8 +10,10 @@ this project if it does not exist.
 
 Input from the user: **$ARGUMENTS**
 
-Interview the user (concise, high-signal — ask only what you can't infer) to fill in the brief.
-This phase is **consume, not generate**: you are capturing inputs, not designing yet. Cover:
+If **superpowers** is installed, run its `/brainstorm` to elicit and refine requirements Socratically,
+then capture the result here. Otherwise interview the user directly (concise, high-signal — ask only
+what you can't infer). This phase is **consume, not generate**: you are capturing inputs, not
+designing yet. Cover:
 
 - **Purpose & primary goal** — what the one job of this site is; the single most important action.
 - **Audience** — who it's for; their context/device; what they need.

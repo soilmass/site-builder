@@ -17,7 +17,6 @@ const html = await res.text();
 const hv = new HtmlValidate({
   extends: ["html-validate:recommended"],
   rules: {
-    // landmark/heading hygiene relevant to high-end sites
     "heading-level": "error",
     "no-missing-references": "error",
   },

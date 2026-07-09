@@ -1,31 +1,43 @@
 #!/usr/bin/env node
 /**
- * SessionStart — surface where a site build is, so a resumed session has context.
- * Prints a short status line to stdout (added to context). Always exits 0.
+ * SessionStart — inject where a build is + the Definition of Done into context.
+ * (Doing this here is the audit-recommended way to surface plugin doctrine, since a
+ * plugin-root CLAUDE.md is NOT auto-loaded.) Emits SessionStart additionalContext JSON.
  */
 
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 
-const site = join(process.cwd(), ".site");
+const projectDir = process.env.CLAUDE_PROJECT_DIR ?? process.cwd();
+const site = join(projectDir, ".site");
 if (!existsSync(site)) process.exit(0);
 
 const phases = [
-  ["brief.md", "brief captured"],
-  ["ia.md", "IA planned"],
-  ["content.md", "content drafted"],
-  ["acceptance", "acceptance criteria written"],
-  ["tokens.json", "design tokens generated"],
+  ["brief.md", "brief"],
+  ["ia.md", "IA"],
+  ["content.md", "content"],
+  ["acceptance", "acceptance criteria"],
+  ["tokens.json", "tokens"],
   ["reports/summary.md", "gates run"],
   ["review", "reviewed"],
   ["done.md", "SHIPPED"],
 ];
 
-const reached = phases.filter(([p]) => existsSync(join(site, p))).map(([, label]) => label);
+const reached = phases.filter(([p]) => existsSync(join(site, p))).map(([, l]) => l);
 const shipPending = existsSync(join(site, "ship.requested")) && !existsSync(join(site, "done.md"));
 
-if (reached.length) {
-  console.log(`[site-builder] active build — progress: ${reached.join(" → ")}.`);
-  if (shipPending) console.log("[site-builder] a ship is pending; the DoD gate will block until reports are green.");
-}
+const lines = [
+  `[site-builder] active build — progress: ${reached.join(" → ") || "started"}.`,
+  "Definition of Done before ship: every acceptance feature passes; .site/reports/summary.md is STATUS: PASS;",
+  "every .site/review/*.md is VERDICT: PASS; no dark patterns. The DoD Stop hook blocks a pending ship while red.",
+];
+if (shipPending) lines.push("A ship is pending now; resolve red items before finishing.");
+
+const out = {
+  hookSpecificOutput: {
+    hookEventName: "SessionStart",
+    additionalContext: lines.join(" "),
+  },
+};
+process.stdout.write(JSON.stringify(out));
 process.exit(0);

@@ -214,14 +214,19 @@ the model literally cannot declare done while the reports are red.
 
 ---
 
-## 8. Standing doctrine — CLAUDE.md, rules, output style
+## 8. Standing doctrine — the doctrine skill (NOT plugin CLAUDE.md)
 
-- **`CLAUDE.md`** ships: (a) the **taste kernel** (the non-negotiable visual rules), (b) the
-  **Next.js conventions** (§9), (c) the **Definition of Done** checklist the Stop hook enforces.
-- **`.claude/rules/*.md`** (path-scoped): e.g. a rule on `app/**/*.tsx` reminding of RSC-vs-client
-  and semantic-HTML defaults; a rule on `**/*.css` forbidding raw hex (tokens only).
-- **`output-styles/site-craft.md`** (optional): evidence-first, shows the gate results, never
-  claims "done" without the report.
+> **Audit correction (C1):** a plugin-root `CLAUDE.md` is **not loaded** into sessions. Doctrine
+> must ship as a skill and/or a SessionStart hook, never a plugin CLAUDE.md.
+
+- **`skills/site-builder/SKILL.md`** (auto-activating) carries the runtime doctrine: the taste
+  kernel, the Next.js/shadcn conventions (§9), the Definition of Done, and the compose-with-superpowers
+  stance.
+- **SessionStart hook** (`scripts/phase-status.mjs`) reinforces the DoD via `additionalContext` when
+  a `.site/` build is active.
+- **`output-styles/site-craft.md`** (`force-for-plugin: true`): evidence-first, never claims "done"
+  without the report.
+- The plugin-root `CLAUDE.md` is repository dev-notes only; it does not load at runtime.
 
 ---
 
@@ -233,9 +238,10 @@ The concretions that make gates green *by default* rather than by remediation:
   demands (`"use client"` at the leaf, not the root) → smaller JS → passes INP/perf.
 - **Styling (DECIDED):** **Tailwind CSS v4** with `@theme` fed from `tokens.json` via **Style
   Dictionary** → CSS custom properties. Components reference tokens only (enforced by `tokens-gate`).
-- **Accessible components (DECIDED):** **Radix Primitives** as headless, unstyled components styled
-  with Tailwind → APG-correct keyboard/roles/focus for free → fewer `a11y-gate` failures. (This is
-  the shadcn/ui lineage: Radix behavior + Tailwind styling + tokens.)
+- **Accessible components (DECIDED):** **shadcn/ui** (`npx shadcn add`) — Radix behavior + Tailwind
+  styling + source you own → APG-correct keyboard/roles/focus for free → fewer `a11y-gate` failures.
+  shadcn *is* the de facto realization of the Radix + Tailwind v4 choice; theming uses its CSS
+  variables + `@theme` (a bespoke DTCG/Style Dictionary pipeline is an optional export, not primary).
 - **Images/fonts:** `next/image` (AVIF/WebP, sized) + `next/font` (self-hosted, `display: swap`) →
   passes LCP/CLS + font-loading audits.
 - **Motion:** CSS transitions first; Framer Motion where needed, always gated by
@@ -292,8 +298,9 @@ Success = the skeleton holds end-to-end and the Stop hook genuinely blocks on an
 
 1. **Skeleton** — `plugin.json`, `CLAUDE.md` (taste kernel + DoD), the 7 command stubs, the
    `hooks.json` Stop-gate reading `.site/reports/`.
-2. **Template** — `templates/nextjs-starter/` with Tailwind+tokens, React Aria, Playwright/axe/LHCI
-   wired, a GitHub Actions gate workflow.
+2. **Scaffold recipe + overlay** — `templates/scaffold-recipe.md` (create-next-app → shadcn init →
+   gate toolchain) + `templates/overlay/` (Playwright/axe/LHCI/html-validate configs + CI workflow).
+   No bespoke app or token pipeline.
 3. **First skills** — `visual-taste`, `design-tokens`, `component-craft` (enough to build a page well).
 4. **First gates** — `a11y-gate`, `performance-gate`, `semantics-gate`, `visual-regression-gate`.
 5. **Run the pilot** — landing page end-to-end; prove the Stop hook blocks on red.
@@ -306,18 +313,43 @@ Success = the skeleton holds end-to-end and the Stop hook genuinely blocks on an
 
 **Resolved**
 - ✅ **Output stack:** Next.js (App Router).
-- ✅ **Styling engine:** Tailwind v4 `@theme` + Style Dictionary tokens.
-- ✅ **Headless primitives:** Radix Primitives (shadcn/ui lineage).
+- ✅ **Components + theming:** shadcn/ui (Radix + Tailwind v4 `@theme`); DTCG/Style Dictionary optional.
+- ✅ **Methodology:** compose with superpowers.
+- ✅ **Gates:** thin wrappers over de facto CLIs.
 - ✅ **First archetype:** marketing landing page.
 
 **Still deferred (not blocking the skeleton)**
-- **Distribution:** private marketplace vs. public plugin.
-- **Acceptance runner:** Playwright-BDD vs. CucumberJS + Playwright.
+- **Acceptance runner:** playwright-bdd vs. CucumberJS + Playwright.
+- **Taste layer:** author `visual-taste` from canon vs. build on the Frontend Design plugin (evaluate).
 - **How much of Phase I** (research/strategy) to keep as consume-only vs. add a light generative
   skill later.
 
 ---
 
-*Blueprint only — maps `docs/knowledge-base.md` onto Claude Code plugin primitives for a Next.js
-output stack. No plugin code written yet. Next step: build the skeleton (§12.1) and run the
-landing-page pilot (§11).*
+## 14. Revision — the invent-less direction (adopted)
+
+Principle: **invent as little as possible; adopt de facto solutions.** Buy-vs-build ledger:
+
+| Layer | Adopted (de facto) | Remains bespoke |
+|---|---|---|
+| Scaffold | `create-next-app` | scaffold recipe |
+| Components | **shadcn/ui** (Radix + Tailwind) | — |
+| Theming/tokens | shadcn CSS vars + Tailwind `@theme` | thin "tasteful values" guidance; DTCG optional |
+| Methodology (brief/plan/execute/verify) | **superpowers** | thin web orchestration that calls it |
+| Performance gate | Lighthouse CI | `lighthouserc.json` |
+| A11y gate | `@axe-core/playwright` | thin spec |
+| Visual / e2e / acceptance | Playwright (+ playwright-bdd) | `.feature` files |
+| Semantics / sustainability | html-validate / CO2.js | config + budgets |
+| Taste knowledge | evaluate Frontend Design plugin + reference canon | thin taste-checklist skill |
+| DoD enforcement | *(no de facto)* | the ~60-line Stop hook |
+| Distribution | Claude Code plugin marketplace | `marketplace.json` |
+
+**Irreducible bespoke core:** (1) website taste/gate *knowledge* skills, (2) the DoD Stop hook,
+(3) thin orchestration wiring de facto tools into the web workflow, (4) gate configs. Everything
+else is adopted. This supersedes the bespoke-template and bespoke-token-pipeline parts of §8–§11.
+
+---
+
+*Blueprint + adopted invent-less revision. Skeleton is built (v0.1.0). Next: doctrine skill is in
+place; build the first craft skills + gate subagents, then run the landing-page pilot (which
+executes the real create-next-app + shadcn scaffold and settles the untested pieces).*

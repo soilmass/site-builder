@@ -1,25 +1,22 @@
 ---
-description: "Phase 2 — generate the design-token system and theme (color, type, space, radius, shadow, motion)."
+description: "Phase 2 — set the design theme via shadcn tokens (Tailwind v4 @theme). DTCG export optional."
 ---
 
-# /site-builder:tokens — design tokens & theme
+# /site-builder:tokens — theme via shadcn tokens
 
 Read `.site/brief.md` (brand/taste direction) and `.site/ia.md`. Engage `visual-taste` and
 `design-tokens`.
 
-Produce **`.site/tokens.json`** in **W3C DTCG format**, structured in three tiers:
+**Primary (de facto):** set the theme by editing **shadcn's CSS variables** in `app/globals.css`
+and the Tailwind v4 `@theme` — the standard theming for this stack. Cover:
 
-- **Primitive** — raw scales: a color ramp, a modular type scale, an 8pt-based spacing scale,
-  radius, shadow/elevation ramp, motion (durations, easings).
-- **Semantic** — role-based aliases: `surface`, `text`, `text-muted`, `action`, `action-hover`,
-  `border`, `focus`, and status (`success`/`warning`/`danger`/`info`). Include light and dark.
-- **Component** — only where a component needs a specific value not covered by semantics.
+- **Color** — the shadcn semantic roles (`--background`, `--foreground`, `--primary`,
+  `--muted`, `--border`, `--ring`, plus `--destructive`) for light and dark. Every text/action
+  pairing must meet **WCAG 2.2 contrast** against its surface — record the ratios.
+- **Typography** — set `--font-sans` (via `next/font`), a coherent scale, limited weights, body ≥ 16px.
+- **Radius / spacing / shadow** — set `--radius` and lean on Tailwind's scale; keep spacing generous.
 
-Rules (from the taste kernel):
-- Colors are **roles, never names in components**. Every semantic text/action pairing must meet
-  **WCAG 2.2 contrast** against its surface — check and record the ratios.
-- Type: limited weights, body ≥ 16px, a coherent scale ratio.
-- Spacing: one scale, generous defaults.
+Apply the taste kernel: roles-not-hex, fixed scales, deliberate depth. Optionally also export a DTCG
+`.site/tokens.json` for portability (not required for the build).
 
-Then map tokens into the Next.js template's Tailwind v4 `@theme` (via Style Dictionary) so the
-build consumes them. State what's next: `/site-builder:build`.
+State what's next: `/site-builder:build`.

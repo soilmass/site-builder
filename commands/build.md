@@ -1,21 +1,26 @@
 ---
-description: "Phase 3 — implement the site in Next.js (App Router, Tailwind v4 tokens, Radix primitives)."
+description: "Phase 3 — scaffold with create-next-app + shadcn/ui and implement the site per the plan."
+allowed-tools: "Bash Read Write Edit Task"
 ---
 
-# /site-builder:build — implement in Next.js
+# /site-builder:build — scaffold & implement
 
-Scaffold from `templates/nextjs-starter/` if the project isn't set up yet. Read `.site/ia.md`,
-`.site/content.md`, and `.site/tokens.json`. Engage `component-craft`, `responsive-layout`, and
-`interaction-motion`.
+**Invent as little as possible.** If the project isn't scaffolded yet, follow
+`templates/scaffold-recipe.md` exactly: `create-next-app` → `shadcn init` → add the components the
+plan needs (`shadcn add …`) → install the gate toolchain → copy `templates/overlay/*`. Do NOT
+hand-author an app or a token pipeline.
 
-Build the pages and components following the Next.js conventions in CLAUDE.md:
+Then read `.site/ia.md`, `.site/content.md`, and the shadcn theme from `/site-builder:tokens`, and
+implement the pages. If **superpowers** is installed, drive the implementation with its
+`/execute-plan`. Engage `component-craft`, `responsive-layout`, and `interaction-motion`.
+
+Follow the Next.js conventions in the `site-builder` doctrine skill:
 
 - **RSC by default**, `"use client"` only at interactive leaves.
-- **Radix primitives** for every interactive widget; semantic HTML everywhere else.
-- **Tailwind v4 + tokens only** — no raw hex/px-magic; use the theme scale.
+- **shadcn/ui (Radix)** for every interactive widget; semantic HTML everywhere else.
+- **Tailwind v4 + shadcn tokens only** — no raw hex/magic values.
 - **`next/image` + `next/font`**; responsive via intrinsic layout + fluid type.
 - **Motion** guarded by `prefers-reduced-motion`.
-- Wire the copy from `.site/content.md` and the structure from `.site/ia.md`.
 
-Aim to make the gates pass *by construction*, not by later remediation. When the implementation is
-in place, state what's next: `/site-builder:verify`.
+Make the gates pass *by construction*. When the implementation is in place, state what's next:
+`/site-builder:verify`.

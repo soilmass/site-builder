@@ -5,8 +5,9 @@ allowed-tools: "Bash Read Write Edit Task"
 
 # /site-builder:review — judgment reviews
 
-The gates cover only the machine-verifiable ~40%. Now run the judgment reviewers as subagents, each
-with an independent eye, against the running site:
+The gates cover only the machine-verifiable ~40%. If **superpowers** is installed, also run its
+`code-reviewer` agent for implementation quality. Then run the website judgment reviewers as
+subagents, each with an independent eye, against the running site:
 
 - `taste-reviewer` — hierarchy, spacing rhythm, alignment, "does it look designed" (Refactoring UI + NN/g 5).
 - `a11y-manual-reviewer` — keyboard-only traversal, focus order, screen-reader labels, the ~60% axe misses (WCAG + COGA).
