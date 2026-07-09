@@ -231,10 +231,11 @@ The concretions that make gates green *by default* rather than by remediation:
 
 - **App Router + React Server Components** by default; Client Components only where interaction
   demands (`"use client"` at the leaf, not the root) → smaller JS → passes INP/perf.
-- **Styling:** Tailwind CSS v4 with `@theme` fed from `tokens.json` via **Style Dictionary** →
-  CSS custom properties. Components reference tokens only (enforced by `tokens-gate`).
-- **Accessible components:** **React Aria Components** (Adobe) or **Radix** as headless primitives
-  → APG-correct keyboard/roles for free → fewer `a11y-gate` failures.
+- **Styling (DECIDED):** **Tailwind CSS v4** with `@theme` fed from `tokens.json` via **Style
+  Dictionary** → CSS custom properties. Components reference tokens only (enforced by `tokens-gate`).
+- **Accessible components (DECIDED):** **Radix Primitives** as headless, unstyled components styled
+  with Tailwind → APG-correct keyboard/roles/focus for free → fewer `a11y-gate` failures. (This is
+  the shadcn/ui lineage: Radix behavior + Tailwind styling + tokens.)
 - **Images/fonts:** `next/image` (AVIF/WebP, sized) + `next/font` (self-hosted, `display: swap`) →
   passes LCP/CLS + font-loading audits.
 - **Motion:** CSS transitions first; Framer Motion where needed, always gated by
@@ -301,10 +302,15 @@ Success = the skeleton holds end-to-end and the Stop hook genuinely blocks on an
 
 ---
 
-## 13. Open decisions (deferred, not blocking)
+## 13. Open decisions
 
-- **Styling engine:** Tailwind v4 `@theme` (recommended) vs. vanilla CSS Modules + tokens.
-- **Headless primitive library:** React Aria Components (recommended, richest a11y) vs. Radix.
+**Resolved**
+- ✅ **Output stack:** Next.js (App Router).
+- ✅ **Styling engine:** Tailwind v4 `@theme` + Style Dictionary tokens.
+- ✅ **Headless primitives:** Radix Primitives (shadcn/ui lineage).
+- ✅ **First archetype:** marketing landing page.
+
+**Still deferred (not blocking the skeleton)**
 - **Distribution:** private marketplace vs. public plugin.
 - **Acceptance runner:** Playwright-BDD vs. CucumberJS + Playwright.
 - **How much of Phase I** (research/strategy) to keep as consume-only vs. add a light generative
