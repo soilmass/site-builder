@@ -1,0 +1,38 @@
+{
+  "name": "site-builder-nextjs-starter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tokens": "node design/build-tokens.mjs",
+    "prebuild": "npm run tokens",
+    "predev": "npm run tokens",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "gate:a11y": "playwright test tests/a11y.spec.ts",
+    "gate:visual": "playwright test tests/visual.spec.ts",
+    "gate:semantics": "node scripts/validate-html.mjs",
+    "gate:perf": "lhci autorun"
+  },
+  "dependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-navigation-menu": "^1.2.3"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@lhci/cli": "^0.14.0",
+    "@playwright/test": "^1.49.0",
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "html-validate": "^9.5.0",
+    "style-dictionary": "^4.3.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.0"
+  }
+}

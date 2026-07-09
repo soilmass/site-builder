@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+/* Base element defaults that lean on the taste kernel: generous rhythm, readable measure. */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-size: 1rem; /* 16px floor */
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  p {
+    max-width: 68ch; /* comfortable measure */
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+  }
+}
