@@ -57,23 +57,27 @@ discovered by running, not remembered).
 any of those APIs differ from memory, the enforcement is built on sand. One hour of spiking saves
 rework in three milestones.
 
+**Package manager: pnpm** (decided — see Appendix B). Every command in this guide uses `pnpm` /
+`pnpm dlx`; do not mix in `npm`/`npx`, since the locked-stack hooks are stricter to enforce against a
+single lockfile.
+
 **Steps.**
-1. `npx create-next-app@latest` — App Router, TypeScript, no `src/` unless the team prefers it.
-   Record the exact Next version.
+1. `pnpm dlx create-next-app@latest` — App Router, TypeScript, no `src/` unless the team prefers it.
+   Choose pnpm when prompted. Record the exact Next version.
 2. Wire **Tailwind v4** (CSS-first: `@import "tailwindcss"` + `@theme`), pointing design tokens at
    CSS variables. Confirm an arbitrary-value class (`p-[13px]`) can be linted against later.
-3. `npx shadcn@latest init`; add one primitive (`button`). Confirm the `components/ui/` path and that
-   shadcn cooperates with Tailwind v4. This is the highest-uncertainty integration — verify it early.
-4. `npm i gsap @gsap/react lenis`. Build **one throwaway pinned ScrollTrigger scene** using
+3. `pnpm dlx shadcn@latest init`; add one primitive (`button`). Confirm the `components/ui/` path and
+   that shadcn cooperates with Tailwind v4. This is the highest-uncertainty integration — verify early.
+4. `pnpm add gsap @gsap/react lenis`. Build **one throwaway pinned ScrollTrigger scene** using
    `useGSAP()`, with Lenis driving `ScrollTrigger.update` and Lenis raf wired into `gsap.ticker`
    (spec §12.2). Scroll it; confirm no double-scroll jank by eye and in a trace.
 5. Confirm `useGSAP` cleanup kills ScrollTriggers on unmount (spec §12.4) — mount/unmount the scene
    and assert no leaked triggers.
 6. Defer `SplitText`/`ScrollTrigger.refresh()` behind `document.fonts.ready` with a `next/font` face;
    confirm splitting doesn't run against the fallback font (spec §12.1).
-7. Run **Lighthouse CI** against `next build && next start` (not dev). Confirm the local prod-build
+7. Run **Lighthouse CI** against `pnpm build && pnpm start` (not dev). Confirm the local prod-build
    audit path works end-to-end.
-8. Install Playwright + `@axe-core/playwright`; capture one screenshot and one axe pass.
+8. `pnpm add -D @playwright/test @axe-core/playwright`; capture one screenshot and one axe pass.
 
 **Definition of done.** `design/references/stack-truths.md` exists and records, with version numbers:
 the Tailwind v4 token wiring that works, the shadcn-on-v4 result, the exact `useGSAP`+Lenis
@@ -266,8 +270,27 @@ known-mediocre sites through the jury (screenshots + scripted-scroll filmstrips,
 via M2). The jury's ranking must match the operator's ranking. **Tune anchor language, not the
 threshold, until it does.**
 
-**Blocked on:** gap-list item 3 — the operator must name the ten sites. Surface this as an operator
-decision before starting (see Open Decisions below).
+**Calibration set (gap 3 — decided; starting picks).** SOTD rotates and sites go dark, so treat these
+as a starting roster: verify each is live before the run and swap any that has changed, keeping the
+5 + 5 split. The mediocre five are deliberately *competent-but-generic*, not broken — the jury's job
+is to separate craft from fine-but-forgettable, and a broken site tests nothing.
+
+*High-craft five (expressive/immersive, award-caliber studio & portfolio work):*
+1. `lusion.co` — immersive WebGL, signature interaction
+2. `activetheory.net` — WebGL-forward studio portfolio
+3. `obys.agency` — expressive type + motion, strong pacing
+4. `locomotive.ca` — scroll choreography, editorial layout
+5. `resn.co.nz` — playful interactive craft
+
+*Competent-but-generic five:*
+6. Default `create-next-app` landing page, deployed as-is — the canonical AI/framework default look
+7. A stock Vercel starter template deployed unmodified (e.g. a blog/portfolio starter)
+8. A default Squarespace template demo
+9. A default Wix template demo
+10. A generic Bootstrap marketplace theme demo
+
+The operator ranks all ten by hand; the jury's ranking must match. If it doesn't, tune anchor language
+(not the 6.5 threshold) and re-run.
 
 **Verification (DoD — spec DoD (3)).** Jury ranking of the ten matches the operator's ranking; the
 anchor language edits that achieved it are committed; the 6.5 threshold is unchanged.
@@ -292,7 +315,7 @@ preview approved. Count the human approvals — exactly two.
 |---|---|---|
 | 1 | Jury 6.5 uncalibrated | M7 calibration run |
 | 2 | Motion-token starter values are educated defaults | M8 (do they read as intentional in the first filmstrip?) |
-| 3 | Calibration set unnamed | **Operator decision, before M7** |
+| 3 | Calibration set unnamed | **Named in M7** (starting roster; operator verifies live + hand-ranks) |
 | 4 | No immersive shader reference library | Noted in M0; blocks only an immersive project |
 | 5 | Dual-run jury doubles Phase 3 cost | Operating decision post-M7 (single-run once stability proven?) |
 | 6 | Art direction of operator/stock imagery ungated beyond jury | Operating decision — add image-direction rubric row or accept jury coverage |
@@ -301,11 +324,17 @@ preview approved. Count the human approvals — exactly two.
 Items 1–3 close during the calibration arc. Item 4 blocks only immersive-tier work. Items 5–7 are
 operating decisions, not build blockers.
 
-## Appendix B — Open decisions requiring operator input
+## Appendix B — Decisions
 
-1. **Calibration set (gap 3):** which ten sites (5 SOTD winners, 5 mediocre)? Blocks M7.
-2. **Package manager:** the spec references both `npm`/`npx` (§5) and `pnpm baselines:capture` (§4).
-   Pick one and make it consistent across scripts and hooks before M6.
+**Resolved:**
+1. **Package manager → pnpm.** The spec already assumes it (`pnpm baselines:capture`, §4); it's
+   stricter about phantom dependencies (which matters when hooks enforce a locked stack) and faster in
+   CI. All commands use `pnpm` / `pnpm dlx`; `create-next-app` and `shadcn` run fine under it. Applied
+   throughout M0 and M6.
+2. **Calibration set (gap 3) → named in M7** as a starting roster (5 high-craft, 5
+   competent-but-generic). Operator verifies each is live and hand-ranks before the run.
+
+**Still open (operating decisions, not build blockers):**
 3. **Jury cost (gap 5):** keep dual-run permanently, or drop to single-run after calibration proves
    stability?
 4. **Image art-direction gate (gap 6):** add a rubric row or accept jury coverage?
