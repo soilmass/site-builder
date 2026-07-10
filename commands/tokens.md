@@ -4,8 +4,17 @@ description: "Phase 2 — set the design theme via shadcn tokens (Tailwind v4 @t
 
 # /site-builder:tokens — theme via shadcn tokens
 
-Read `.site/brief.md` (brand/taste direction) and `.site/ia.md`. Engage `visual-taste` and
-`design-tokens`.
+Read `.site/brief.md` (brand/taste direction) and `.site/ia.md`. Engage `visual-taste` then
+`design-tokens` — **in that order**.
+
+**Step A — commit the aesthetic direction first (`visual-taste` Layer 2).** Ground it in the
+subject, choose the type personality and the single signature element, set the boldness dial for the
+archetype, and **critique it** against the brief before tokenizing. Do not skip to values until the
+direction is committed — direction determines tokens, not vice versa.
+
+**Step B — systematize into tokens, structure before color.** First set the *structural* tokens
+(type scale, spacing, radius) so hierarchy holds in grayscale; add **color roles last** so color
+never carries hierarchy it shouldn't.
 
 **Primary (de facto):** set the theme by editing **shadcn's CSS variables** in `app/globals.css`
 and the Tailwind v4 `@theme` — the standard theming for this stack. Cover:

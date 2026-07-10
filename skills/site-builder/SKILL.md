@@ -29,6 +29,33 @@ Each writes an artifact under the project's `.site/`. `verify`/`review` failures
 `build`. You may not declare a site done until the Definition of Done is met — the DoD Stop hook
 enforces this mechanically.
 
+## Sequencing that yields god-tier (order is quality)
+
+Each decision constrains everything downstream; a wrong order forces reworks that degrade the
+result. Follow this order and its **invariant: no step may force a rework of an upstream step.**
+
+**Macro:** `brief → IA → content → acceptance → direction → tokens → components → sections → page → motion → verify → review → ship`
+
+**Skill dependency graph (fire in this order):**
+```
+information-architecture → content-design → ux-writing        (structure → content → copy; lock before form)
+visual-taste (direction+kernel) → design-tokens → component-craft → responsive-layout → interaction-motion
+acceptance-criteria ──────────────────────────────────────────► drives verify
+ethical-design ────────────────────────────────────────────── cross-cutting (build + review)
+```
+
+**Micro-rules (the levers that separate god-tier from fine):**
+1. **Content before form.** Real IA + copy before any visual work. Never design around lorem.
+2. **Direction before tokens.** Commit a subject-grounded aesthetic direction and *critique it*
+   (`visual-taste` Layer 2) before systematizing it into tokens.
+3. **Structure before color.** Establish hierarchy/spacing/type in grayscale first; add color last.
+   Color must never be the crutch that carries hierarchy.
+4. **Tokens → components → sections → page.** Atomic order. Never retrofit tokens onto built pages.
+5. **Motion last.** An enhancement on a solid static composition; always `prefers-reduced-motion`.
+6. **Accessibility early, not bolted on.** Semantics at component time, contrast at token time,
+   keyboard/focus at interaction time.
+7. **Critique between phases.** Direction critique, then the verify + review gates — cheap early fixes.
+
 ## Taste kernel (non-negotiable; the `visual-taste` skill has the full checklist)
 
 1. Spacing is a system — token scale only; start with too much whitespace.

@@ -11,8 +11,11 @@ plan needs (`shadcn add …`) → install the gate toolchain → copy `templates
 hand-author an app or a token pipeline.
 
 Then read `.site/ia.md`, `.site/content.md`, and the shadcn theme from `/site-builder:tokens`, and
-implement the pages. If **superpowers** is installed, drive the implementation with its
-`/execute-plan`. Engage `component-craft`, `responsive-layout`, and `interaction-motion`.
+implement in **atomic order — never retrofit**: (1) **components** (`shadcn add`, styled with tokens,
+via `component-craft`), (2) **sections** (compose components; get hierarchy/spacing right in
+grayscale-thinking via `responsive-layout`), (3) **page** (assemble with the real copy), (4) **motion
+last** as enhancement (`interaction-motion`, always `prefers-reduced-motion`-guarded). If
+**superpowers** is installed, drive the implementation with its `/execute-plan`.
 
 Follow the Next.js conventions in the `site-builder` doctrine skill:
 
