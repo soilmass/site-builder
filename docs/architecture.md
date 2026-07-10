@@ -67,14 +67,14 @@ site-builder/                          # the plugin repo (this repo)
 │   └── content-reviewer.md
 ├── hooks/
 │   └── hooks.json                     # Stop hook = Definition-of-Done gate; PostToolUse = format
-├── scripts/                           # gate implementations the subagents call
-│   ├── run-a11y.mjs   run-lighthouse.mjs   check-headers.mjs
-│   ├── validate-html.mjs   build-tokens.mjs   check-carbon.mjs   …
+├── scripts/                           # AS BUILT: dod-gate.mjs, format-if-source.mjs, phase-status.mjs
+│                                      # (gate scripts live in templates/overlay/scripts/, e.g. validate-html.mjs)
 ├── templates/
-│   └── nextjs-starter/                # the scaffold new sites are generated from
+│   ├── scaffold-recipe.md             # create-next-app + shadcn recipe (NOT a bespoke template)
+│   └── overlay/                       # gate configs copied onto the scaffold
 ├── output-styles/
-│   └── site-craft.md                  # optional tone: evidence-first, taste-aware
-├── CLAUDE.md                          # taste kernel + Next.js conventions + Definition of Done
+│   └── site-craft.md                  # evidence-first tone (force-for-plugin)
+├── CLAUDE.md                          # repo dev-notes only (doctrine loads via skills/site-builder/, not here)
 └── docs/                              # knowledge-base.md, architecture.md (this file)
 ```
 
@@ -241,10 +241,11 @@ The concretions that make gates green *by default* rather than by remediation:
   demands (`"use client"` at the leaf, not the root) → smaller JS → passes INP/perf.
 - **Styling (DECIDED):** **Tailwind CSS v4** with `@theme` fed from `tokens.json` via **Style
   Dictionary** → CSS custom properties. Components reference tokens only (enforced by `tokens-gate`).
-- **Accessible components (DECIDED):** **shadcn/ui** (`npx shadcn add`) — Radix behavior + Tailwind
-  styling + source you own → APG-correct keyboard/roles/focus for free → fewer `a11y-gate` failures.
-  shadcn *is* the de facto realization of the Radix + Tailwind v4 choice; theming uses its CSS
+- **Accessible components (DECIDED):** **shadcn/ui** (`npx shadcn add`) — **Base UI** behavior (the
+  successor to Radix) + Tailwind styling + source you own → APG-correct keyboard/roles/focus for free.
+  shadcn *is* the de facto realization of the Base UI + Tailwind v4 choice; theming uses its CSS
   variables + `@theme` (a bespoke DTCG/Style Dictionary pipeline is an optional export, not primary).
+  Note: current shadcn `Button` has no `asChild` — style link-buttons with `buttonVariants(...)`.
 - **Images/fonts:** `next/image` (AVIF/WebP, sized) + `next/font` (self-hosted, `display: swap`) →
   passes LCP/CLS + font-loading audits.
 - **Motion:** CSS transitions first; Framer Motion where needed, always gated by
@@ -316,7 +317,7 @@ Success = the skeleton holds end-to-end and the Stop hook genuinely blocks on an
 
 **Resolved**
 - ✅ **Output stack:** Next.js (App Router).
-- ✅ **Components + theming:** shadcn/ui (Radix + Tailwind v4 `@theme`); DTCG/Style Dictionary optional.
+- ✅ **Components + theming:** shadcn/ui (Base UI + Tailwind v4 `@theme`); DTCG/Style Dictionary optional.
 - ✅ **Methodology:** compose with superpowers.
 - ✅ **Gates:** thin wrappers over de facto CLIs.
 - ✅ **First archetype:** marketing landing page.
@@ -336,7 +337,7 @@ Principle: **invent as little as possible; adopt de facto solutions.** Buy-vs-bu
 | Layer | Adopted (de facto) | Remains bespoke |
 |---|---|---|
 | Scaffold | `create-next-app` | scaffold recipe |
-| Components | **shadcn/ui** (Radix + Tailwind) | — |
+| Components | **shadcn/ui** (Base UI + Tailwind) | — |
 | Theming/tokens | shadcn CSS vars + Tailwind `@theme` | thin "tasteful values" guidance; DTCG optional |
 | Methodology (brief/plan/execute/verify) | **superpowers** | thin web orchestration that calls it |
 | Performance gate | Lighthouse CI | `lighthouserc.json` |

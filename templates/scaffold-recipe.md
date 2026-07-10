@@ -38,16 +38,20 @@ npx playwright install --with-deps chromium
 
 ## 4. Copy the gate overlay
 
-Copy `templates/overlay/*` into the project (preserving paths):
+Copy `templates/overlay/*` into the project. **Because the scaffold uses `--src-dir`, code goes
+under `src/` (so `@/*` → `src/*`); configs/tests/CI go at the repo root.** Place each file as:
 
-- `playwright.config.ts` — runs gates against `next build && next start`
-- `tests/a11y.spec.ts` — `@axe-core/playwright`, WCAG 2.2 AA (the `a11y-gate`)
-- `tests/visual.spec.ts` — Playwright screenshots (the `visual-regression-gate`)
-- `tests/responsive.spec.ts` — viewport matrix: no overflow + tap targets (the `responsive-gate`)
-- `scripts/validate-html.mjs` — html-validate on rendered HTML (the `semantics-gate`)
-- `components/image-slot.tsx` — the sized, generation-ready image placeholder (the `media` skill)
-- `lighthouserc.json` — Lighthouse CI budgets (the `performance-gate`, also SEO/best-practices)
-- `.github/workflows/gates.yml` — runs the gates on every push
+- `playwright.config.ts` → **repo root** — runs gates against `next build && next start`
+- `tests/a11y.spec.ts` → **repo root** `tests/` — `@axe-core/playwright`, WCAG 2.2 AA (`a11y-gate`)
+- `tests/visual.spec.ts` → `tests/` — Playwright screenshots (`visual-regression-gate`)
+- `tests/responsive.spec.ts` → `tests/` — viewport matrix (`responsive-gate`)
+- `scripts/validate-html.mjs` → `scripts/` — html-validate on rendered HTML (`semantics-gate`)
+- `components/image-slot.tsx` → **`src/components/image-slot.tsx`** — so `@/components/image-slot`
+  resolves under `--src-dir` (the sized, generation-ready image placeholder — `media` skill)
+- `lighthouserc.json` → **repo root** — Lighthouse CI budgets (`performance-gate`, also SEO/BP)
+- `.github/workflows/gates.yml` → **repo root** — runs the gates on every push
+
+(States pages likewise go under `src/app/`: `src/app/not-found.tsx`, `src/app/error.tsx`.)
 
 Add these scripts to `package.json`:
 
