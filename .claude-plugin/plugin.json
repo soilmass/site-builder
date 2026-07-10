@@ -1,8 +1,0 @@
-{
-  "name": "site-builder",
-  "displayName": "Site Builder",
-  "version": "0.1.0",
-  "description": "Build high-end, tested Next.js websites with taste and validation built in. A methodology-as-skills plugin with quality gates enforced by a Definition-of-Done Stop hook.",
-  "keywords": ["web", "design", "accessibility", "nextjs", "quality-gates", "taste", "wcag", "core-web-vitals"],
-  "license": "MIT"
-}
