@@ -23,7 +23,12 @@ page). Canon: Brad Frost *Atomic Design*; WHATWG HTML; shadcn/ui (Base UI primit
 - **Tokens only.** Style with Tailwind utilities backed by the shadcn theme — no raw hex, no magic
   px. If a value isn't in the token system, fix the tokens (don't inline).
 - **Composition over configuration.** Small, single-purpose components with clear props; compose up.
-- **`next/image` (sized, AVIF/WebP) and `next/font`** for all media/fonts.
+- **`next/font`** for all fonts. **Every image is an `ImageSlot`** (from the `media` skill) — a
+  sized, generation-ready placeholder, never a bare `<img>` — so images never shift layout and can be
+  generated later. Record each in `.site/media.json`.
+- **Build the non-happy states** (`states` skill): `not-found.tsx` (custom 404), `error.tsx`, and
+  loading/empty/error UI for any dynamic surface — not just the happy path.
+- **Dark mode is a first-class output**, not an afterthought — style both themes with tokens (`visual-taste`).
 
 ## Quality bar (god-tier)
 - Every interactive element is keyboard-operable with a visible focus ring, by construction.

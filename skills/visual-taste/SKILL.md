@@ -92,6 +92,13 @@ Match the boldness dial to the job. The kernel (Layer 1) never relaxes; only the
    pass? Is boldness concentrated in one place? Revise, then build. This critique is also run
    independently later by the `taste-reviewer` subagent.
 
+## Dark mode is not an afterthought
+
+"Weird dark mode" is the single most common AI tell. If the site has a dark theme, design it
+deliberately: it is not "invert the light theme." Surfaces get *lighter* with elevation (not darker),
+pure black/white are avoided (use near-black/near-white from tokens), and **every pairing is
+contrast-checked in dark too**. Test both themes; both must pass the a11y gate and read as designed.
+
 ## Stack integration
 
 - Express all of the above as **shadcn CSS-variable tokens + Tailwind v4 `@theme`** (via `design-tokens`),

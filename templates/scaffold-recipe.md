@@ -43,7 +43,9 @@ Copy `templates/overlay/*` into the project (preserving paths):
 - `playwright.config.ts` — runs gates against `next build && next start`
 - `tests/a11y.spec.ts` — `@axe-core/playwright`, WCAG 2.2 AA (the `a11y-gate`)
 - `tests/visual.spec.ts` — Playwright screenshots (the `visual-regression-gate`)
+- `tests/responsive.spec.ts` — viewport matrix: no overflow + tap targets (the `responsive-gate`)
 - `scripts/validate-html.mjs` — html-validate on rendered HTML (the `semantics-gate`)
+- `components/image-slot.tsx` — the sized, generation-ready image placeholder (the `media` skill)
 - `lighthouserc.json` — Lighthouse CI budgets (the `performance-gate`, also SEO/best-practices)
 - `.github/workflows/gates.yml` — runs the gates on every push
 
@@ -54,6 +56,7 @@ Add these scripts to `package.json`:
   "scripts": {
     "gate:a11y": "playwright test tests/a11y.spec.ts",
     "gate:visual": "playwright test tests/visual.spec.ts",
+    "gate:responsive": "playwright test tests/responsive.spec.ts",
     "gate:semantics": "node scripts/validate-html.mjs",
     "gate:perf": "lhci autorun"
   }

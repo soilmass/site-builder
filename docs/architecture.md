@@ -159,8 +159,10 @@ the named canon. These carry taste and craft; they do not run tools.
 | `content-design` | page content/structure | GOV.UK content design | needs-first, front-loaded, scannable, one idea per block |
 | `ux-writing` | any UI copy | Strategic Writing for UX, Microcopy | voice/tone, button/error/empty-state copy, plain language |
 | `interaction-motion` | animation/transitions/states | Disney 12, Material motion, Saffer | easing/duration tokens, choreography, `prefers-reduced-motion`, microinteraction structure |
-| `component-craft` | building React components | React Aria/Radix, Atomic Design, WHATWG | headless a11y primitives, RSC-vs-client, semantic HTML, composition |
-| `responsive-layout` | layout/breakpoints | Every Layout, CSS Grid/Flexbox | intrinsic layout primitives, container queries, fluid type |
+| `component-craft` | building React components | shadcn/ui (Base UI), Atomic Design, WHATWG | accessible primitives, RSC-vs-client, semantic HTML, ImageSlot, states |
+| `responsive-layout` | layout/breakpoints | Every Layout, CSS Grid/Flexbox | intrinsic layout, viewport matrix, no-overflow, tap targets, content resilience |
+| `media` | any image, favicon, OG | next/image, CLS/CWV | sized generation-ready `ImageSlot`, `.site/media.json` manifest, zero-CLS swap |
+| `states` | dynamic surfaces, error pages | NN/g states, Next conventions | loading/empty/error, 404/500, zero-one-many, offline |
 | `acceptance-criteria` | defining "what done means" | Specification by Example | Given-When-Then per user goal, testable, feature files |
 | `ethical-design` | forms/consent/persuasion/pricing | Brignull deceptive.design, GDPR | dark-pattern blocklist, honest defaults, consent, privacy-by-design |
 
@@ -182,6 +184,7 @@ judgment checklist in isolated context (an independent eye) and write to `.site/
 | `security-gate` | header check script + `npm audit` | OWASP Secure Headers | missing CSP/HSTS; high-sev deps |
 | `seo-gate` | metadata + JSON-LD presence + Lighthouse SEO | Google Search Essentials / Schema.org | missing title/meta/OG/structured data |
 | `visual-regression-gate` | Playwright `toHaveScreenshot` | design-system consistency | unexpected pixel diff |
+| `responsive-gate` | Playwright across 320–1920 viewports | WCAG 1.4.10 / 2.5.8 | horizontal overflow; tap target < 24px |
 | `tokens-gate` | Style Dictionary build + stylelint no-hardcoded-color | W3C DTCG | raw hex in components / invalid tokens |
 | `acceptance-gate` | Playwright + Cucumber over `.feature` files | Specification by Example | any scenario fails |
 | `sustainability-gate` | CO2.js on transfer size | W3C WSG / SWDM v4 | page weight over carbon budget |

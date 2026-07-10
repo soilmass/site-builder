@@ -12,6 +12,7 @@ subagent (they run their tool and return `{pass|fail, findings[]}`):
 - `performance-gate` — Lighthouse CI (Core Web Vitals budgets)
 - `semantics-gate` — html-validate on rendered HTML
 - `visual-regression-gate` — Playwright screenshots
+- `responsive-gate` — viewport matrix 320–1920: no overflow + tap targets (WCAG 2.5.8)
 - `seo-gate` — metadata + JSON-LD + Lighthouse SEO *(if in archetype's set)*
 - `security-gate` — headers + `npm audit` *(if in set)*
 - `tokens-gate` — Style Dictionary build + no-hardcoded-color *(if in set)*

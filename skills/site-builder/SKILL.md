@@ -34,7 +34,7 @@ enforces this mechanically.
 Each decision constrains everything downstream; a wrong order forces reworks that degrade the
 result. Follow this order and its **invariant: no step may force a rework of an upstream step.**
 
-**Macro:** `brief → IA → content → acceptance → direction → tokens → components → sections → page → motion → verify → review → ship`
+**Macro:** `brief → IA → content → acceptance → direction → tokens → components (+ media slots, states) → sections → page → motion → verify → review → ship`
 
 **Skill dependency graph (fire in this order):**
 ```
@@ -80,9 +80,13 @@ ethical-design ─────────────────────�
 Ship only when **all** hold, reported with evidence:
 
 - [ ] Every acceptance criterion (`.site/acceptance/*.feature`) passes.
-- [ ] `.site/reports/summary.md` is `STATUS: PASS` (a11y, performance, semantics, plus the
-      archetype's remaining gates).
+- [ ] `.site/reports/summary.md` is `STATUS: PASS` (a11y, performance, semantics, **responsive**,
+      plus the archetype's remaining gates).
 - [ ] Every `.site/review/*.md` is `VERDICT: PASS` (taste, manual a11y, content).
+- [ ] **Production-readiness:** every image is a sized `ImageSlot` (no CLS) tracked in
+      `.site/media.json`; no horizontal overflow and tap targets ≥ 24px across 320–1920; custom
+      404 (`not-found.tsx`) + error boundary present; empty/error/loading states designed; **dark
+      mode** correct and contrast-safe; per-page metadata + favicon + OG present.
 - [ ] No dark patterns; consent/privacy handled where data is collected.
 
 **Never claim a site is "done" while any of the above is red** — the DoD Stop hook will block you,
