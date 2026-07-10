@@ -15,7 +15,7 @@ standing rules (a plugin-root CLAUDE.md does not load, so the doctrine lives her
   `/write-plan` + `/execute-plan` for planning/execution, its verification-before-completion habit,
   and its `code-reviewer` agent. site-builder adds only the *website* layer on top.
 - **Scaffold:** `create-next-app` (never a hand-authored template). Then **shadcn/ui**
-  (`npx shadcn@latest init` / `add`) for accessible Radix-based components you own.
+  (`npx shadcn@latest init -d -y`, then `add`) for accessible components you own (built on Base UI).
 - **Theming:** shadcn's CSS-variable theme + Tailwind v4 `@theme` is primary. DTCG/Style Dictionary
   is an optional export, not the default.
 - **Gates:** drive de facto CLIs — Lighthouse CI, `@axe-core/playwright`, html-validate, CO2.js —
@@ -69,7 +69,8 @@ ethical-design ─────────────────────�
 ## Next.js conventions (make gates pass by construction)
 
 - App Router + RSC by default; `"use client"` only at interactive leaves.
-- shadcn/ui (Radix) for every interactive widget; semantic HTML everywhere else.
+- shadcn/ui (Base UI) for every interactive widget; semantic HTML everywhere else. The current
+  Button has no `asChild` — style links with `buttonVariants(...)`, keep `<Button>` for actions.
 - Tailwind v4 + shadcn tokens only — no raw hex/magic values.
 - `next/image` (sized, AVIF/WebP) + `next/font` (self-hosted, `display: swap`).
 - Motion guarded by `prefers-reduced-motion`; Metadata API + JSON-LD for SEO.

@@ -16,13 +16,18 @@ all configured. No bespoke config needed.
 ## 2. Add accessible components (shadcn/ui)
 
 ```bash
-npx shadcn@latest init          # sets up theming (CSS vars + Tailwind @theme) and utils
-npx shadcn@latest add button navigation-menu dialog   # add per the plan; each is Radix-based & accessible
+npx shadcn@latest init -d -y    # sets up theming (CSS vars + Tailwind @theme) and utils
+npx shadcn@latest add button navigation-menu dialog -y   # add per the plan; each is accessible
 ```
 
-shadcn gives component **source you own**, built on Radix (keyboard/focus/ARIA handled). Theming is
-CSS variables in `app/globals.css` + Tailwind v4 `@theme` — this is the primary token system.
-(`/site-builder:tokens` edits these variables; a DTCG export is optional, not required.)
+shadcn gives component **source you own**, built on **Base UI** (`@base-ui/react`, the successor to
+Radix — keyboard/focus/ARIA handled). Theming is CSS variables in `app/globals.css` + Tailwind v4
+`@theme` — the primary token system. (`/site-builder:tokens` edits these variables; a DTCG export is
+optional.)
+
+> Verified truths (pilot): `create-next-app@latest` installs **Next 16 / React 19 / Tailwind v4**.
+> shadcn `init` flags changed — use `-d -y` (the old `-b <color>` is gone). The current shadcn
+> **Button has no `asChild`**: style link-buttons with `buttonVariants({ variant, size, className })`.
 
 ## 3. Add the gate toolchain (de facto CLIs)
 

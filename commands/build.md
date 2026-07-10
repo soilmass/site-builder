@@ -20,7 +20,8 @@ last** as enhancement (`interaction-motion`, always `prefers-reduced-motion`-gua
 Follow the Next.js conventions in the `site-builder` doctrine skill:
 
 - **RSC by default**, `"use client"` only at interactive leaves.
-- **shadcn/ui (Radix)** for every interactive widget; semantic HTML everywhere else.
+- **shadcn/ui (Base UI)** for every interactive widget; semantic HTML everywhere else (links styled
+  with `buttonVariants(...)`, not `Button asChild`).
 - **Tailwind v4 + shadcn tokens only** — no raw hex/magic values.
 - **`next/image` + `next/font`**; responsive via intrinsic layout + fluid type.
 - **Motion** guarded by `prefers-reduced-motion`.

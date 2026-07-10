@@ -11,7 +11,7 @@ site-builder is a thin *website-production* layer over de facto tools:
 - **Methodology** — composes with **superpowers** (`/brainstorm`, `/write-plan`, `/execute-plan`,
   verification, `code-reviewer`).
 - **Scaffold** — **`create-next-app`** (Next.js App Router + Tailwind v4 + TS).
-- **Components + theming** — **shadcn/ui** (Radix + Tailwind, accessible, source you own).
+- **Components + theming** — **shadcn/ui** (Base UI + Tailwind, accessible, source you own).
 - **Gates** — thin wrappers over **Lighthouse CI**, **`@axe-core/playwright`**, **html-validate**,
   **CO2.js**.
 
